@@ -121,7 +121,7 @@ def test_port_delay_revert_restores_supported_fuels_snapshot():
     assert port.supported_fuels == ["green_methanol", "ammonia"]
 
 
-def test_supply_disruption_revert_restores_original_capacity_without_compounding():
+def test_supply_disruption_revert_restores_original_capacity_after_multiple_applies():
     intervention = FuelSupplyDisruption(
         id="d1",
         intervention_type="FuelSupplyDisruption",
@@ -135,7 +135,7 @@ def test_supply_disruption_revert_restores_original_capacity_without_compounding
     intervention.apply(world, M())
     intervention.apply(world, M())
 
-    assert supplier.max_supply_by_fuel["green_methanol"] == 25.0
+    assert supplier.max_supply_by_fuel["green_methanol"] == 50.0
 
     intervention.revert(world, M())
 

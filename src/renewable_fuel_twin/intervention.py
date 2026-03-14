@@ -64,27 +64,35 @@ class FuelSupplyDisruption(Intervention):
         supplier_id = self.parameters["supplier_id"]
         fuel_id = self.parameters["fuel_id"]
         mult = float(self.parameters["capacity_multiplier"])
+        if not hasattr(self, "_original_max_supply_map"):
+            self._original_max_supply_map = {}
         for supplier in world.entities["suppliers"]:
             if supplier.id == supplier_id:
                 if fuel_id not in supplier.max_supply_by_fuel:
                     raise InterventionError(
                         f"fuel not found for supplier: supplier_id={supplier_id}, fuel_id={fuel_id}"
                     )
-                if not hasattr(self, "_original_max_supply"):
-                    self._original_max_supply = supplier.max_supply_by_fuel[fuel_id]
-                supplier.max_supply_by_fuel[fuel_id] *= mult
+                key = (supplier_id, fuel_id)
+                if key not in self._original_max_supply_map:
+                    self._original_max_supply_map[key] = supplier.max_supply_by_fuel[fuel_id]
+                supplier.max_supply_by_fuel[fuel_id] = self._original_max_supply_map[key] * mult
                 return
         raise InterventionError(f"supplier not found: {supplier_id}")
 
     def revert(self, world, model) -> None:
-        if not hasattr(self, "_original_max_supply"):
-            return
         supplier_id = self.parameters["supplier_id"]
         fuel_id = self.parameters["fuel_id"]
+        if not hasattr(self, "_original_max_supply_map"):
+            return
+        key = (supplier_id, fuel_id)
+        if key not in self._original_max_supply_map:
+            return
         for supplier in world.entities["suppliers"]:
             if supplier.id == supplier_id:
-                supplier.max_supply_by_fuel[fuel_id] = self._original_max_supply
-                del self._original_max_supply
+                supplier.max_supply_by_fuel[fuel_id] = self._original_max_supply_map[key]
+                del self._original_max_supply_map[key]
+                if not self._original_max_supply_map:
+                    del self._original_max_supply_map
                 return
         raise InterventionError(f"supplier not found: {supplier_id}")
 

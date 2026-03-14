@@ -83,6 +83,16 @@ def run_scenario(world: World, app_config: AppConfig, scenario: ScenarioConfig, 
         txs = model.step()
         step_metrics.append(collect_step_metrics(step, txs))
 
+    for idx, intervention in enumerate(interventions):
+        if was_active[idx]:
+            intervention.revert(world, model)
+            model.events.append({
+                "step": runtime.steps,
+                "event_type": intervention.intervention_type,
+                "id": intervention.id,
+                "transition": "reverted_at_end",
+            })
+
     summary = summarize_run(step_metrics)
     safe_name = _sanitize_run_name(runtime.name)
     run_id = f"{datetime.now(UTC).strftime('%Y%m%d_%H%M%S')}_{safe_name}_{uuid.uuid4().hex[:8]}"
