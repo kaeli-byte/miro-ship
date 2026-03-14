@@ -1,0 +1,15 @@
+- id: route_europe_asia
+  origin_port_id: port_rotterdam
+  destination_port_id: port_singapore
+  distance_nm: 8300
+  disruption_risk_score: 0.3
+- id: route_me_asia
+  origin_port_id: port_fujairah
+  destination_port_id: port_singapore
+  distance_nm: 3500
+  disruption_risk_score: 0.25
+- id: route_europe_na
+  origin_port_id: port_exporthub1
+  destination_port_id: port_rotterdam
+  distance_nm: 4200
+  disruption_risk_score: 0.2

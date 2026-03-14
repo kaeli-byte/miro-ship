@@ -1,0 +1,55 @@
+from __future__ import annotations
+
+from dataclasses import dataclass
+
+from .exceptions import InterventionError
+
+
+@dataclass
+class Intervention:
+    id: str
+    intervention_type: str
+    target_ids: list[str]
+    start_step: int
+    end_step: int | None
+    parameters: dict
+
+    def active(self, step: int) -> bool:
+        return self.start_step <= step and (self.end_step is None or step <= self.end_step)
+
+    def apply(self, world, model) -> None:
+        raise NotImplementedError
+
+
+class CarbonPriceShock(Intervention):
+    def apply(self, world, model) -> None:
+        model.carbon_price = float(self.parameters["new_price_usd_per_tco2"])
+
+
+class PortDelayIntervention(Intervention):
+    def apply(self, world, model) -> None:
+        fuel_id = self.parameters["fuel_id"]
+        for port in world.entities["ports"]:
+            if port.id in self.target_ids and fuel_id in port.supported_fuels:
+                port.supported_fuels.remove(fuel_id)
+
+
+class FuelSupplyDisruption(Intervention):
+    def apply(self, world, model) -> None:
+        supplier_id = self.parameters["supplier_id"]
+        fuel_id = self.parameters["fuel_id"]
+        mult = float(self.parameters["capacity_multiplier"])
+        for supplier in world.entities["suppliers"]:
+            if supplier.id == supplier_id:
+                supplier.max_supply_by_fuel[fuel_id] *= mult
+                return
+        raise InterventionError(f"supplier not found: {supplier_id}")
+
+
+def build_interventions(specs: list[dict]) -> list[Intervention]:
+    mapping = {
+        "CarbonPriceShock": CarbonPriceShock,
+        "PortDelayIntervention": PortDelayIntervention,
+        "FuelSupplyDisruption": FuelSupplyDisruption,
+    }
+    return [mapping[s["intervention_type"]](**s) for s in specs]

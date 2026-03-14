@@ -1,0 +1,80 @@
+- id: op_1
+  name: Operator 1
+  fleet_size: 25
+  route_ids: [route_europe_asia]
+  risk_tolerance: 0.3
+  green_premium_tolerance: 120
+  preferred_fuels: [green_methanol, fossil_marine_fuel]
+  retrofit_budget: 500000
+- id: op_2
+  name: Operator 2
+  fleet_size: 30
+  route_ids: [route_europe_asia, route_me_asia]
+  risk_tolerance: 0.5
+  green_premium_tolerance: 150
+  preferred_fuels: [green_ammonia, green_methanol]
+  retrofit_budget: 600000
+- id: op_3
+  name: Operator 3
+  fleet_size: 20
+  route_ids: [route_me_asia]
+  risk_tolerance: 0.2
+  green_premium_tolerance: 90
+  preferred_fuels: [fossil_marine_fuel]
+  retrofit_budget: 300000
+- id: op_4
+  name: Operator 4
+  fleet_size: 22
+  route_ids: [route_europe_na]
+  risk_tolerance: 0.4
+  green_premium_tolerance: 110
+  preferred_fuels: [green_methanol]
+  retrofit_budget: 450000
+- id: op_5
+  name: Operator 5
+  fleet_size: 18
+  route_ids: [route_europe_na]
+  risk_tolerance: 0.6
+  green_premium_tolerance: 160
+  preferred_fuels: [green_hydrogen]
+  retrofit_budget: 520000
+- id: op_6
+  name: Operator 6
+  fleet_size: 27
+  route_ids: [route_europe_asia]
+  risk_tolerance: 0.45
+  green_premium_tolerance: 130
+  preferred_fuels: [green_methanol, green_ammonia]
+  retrofit_budget: 550000
+- id: op_7
+  name: Operator 7
+  fleet_size: 19
+  route_ids: [route_me_asia]
+  risk_tolerance: 0.35
+  green_premium_tolerance: 100
+  preferred_fuels: [fossil_marine_fuel, green_methanol]
+  retrofit_budget: 380000
+- id: op_8
+  name: Operator 8
+  fleet_size: 21
+  route_ids: [route_europe_asia, route_europe_na]
+  risk_tolerance: 0.55
+  green_premium_tolerance: 170
+  preferred_fuels: [green_hydrogen, green_methanol]
+  retrofit_budget: 620000
+- id: op_9
+  name: Operator 9
+  fleet_size: 24
+  route_ids: [route_me_asia, route_europe_na]
+  risk_tolerance: 0.25
+  green_premium_tolerance: 95
+  preferred_fuels: [fossil_marine_fuel]
+  retrofit_budget: 340000
+- id: op_10
+  name: Operator 10
+  fleet_size: 26
+  route_ids: [route_europe_asia]
+  risk_tolerance: 0.5
+  green_premium_tolerance: 140
+  preferred_fuels: [green_ammonia, fossil_marine_fuel]
+  retrofit_budget: 560000
