@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 from .exceptions import InterventionError
 
@@ -11,8 +11,8 @@ class Intervention:
     intervention_type: str
     target_ids: list[str]
     start_step: int
-    end_step: int | None
-    parameters: dict
+    end_step: int | None = None
+    parameters: dict = field(default_factory=dict)
 
     def active(self, step: int) -> bool:
         return self.start_step <= step and (self.end_step is None or step <= self.end_step)
@@ -52,4 +52,13 @@ def build_interventions(specs: list[dict]) -> list[Intervention]:
         "PortDelayIntervention": PortDelayIntervention,
         "FuelSupplyDisruption": FuelSupplyDisruption,
     }
-    return [mapping[s["intervention_type"]](**s) for s in specs]
+    interventions: list[Intervention] = []
+    for spec in specs:
+        intervention_type = spec.get("intervention_type")
+        cls = mapping.get(intervention_type)
+        if cls is None:
+            raise ValueError(
+                f"Unknown intervention_type '{intervention_type}' in spec: {spec}"
+            )
+        interventions.append(cls(**spec))
+    return interventions
