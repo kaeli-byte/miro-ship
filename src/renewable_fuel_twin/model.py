@@ -66,11 +66,19 @@ def run_scenario(world: World, app_config: AppConfig, scenario: ScenarioConfig, 
     interventions = build_interventions(runtime.interventions)
     step_metrics = []
 
+    was_active = [False] * len(interventions)
+
     for step in range(runtime.steps):
-        for intervention in interventions:
-            if intervention.active(step):
+        for idx, intervention in enumerate(interventions):
+            is_active = intervention.active(step)
+            prev_active = was_active[idx]
+            if is_active and not prev_active:
                 intervention.apply(world, model)
-                model.events.append({"step": step, "event_type": intervention.intervention_type, "id": intervention.id})
+                model.events.append({"step": step, "event_type": intervention.intervention_type, "id": intervention.id, "transition": "activated"})
+            elif prev_active and not is_active:
+                intervention.revert(world, model)
+                model.events.append({"step": step, "event_type": intervention.intervention_type, "id": intervention.id, "transition": "reverted"})
+            was_active[idx] = is_active
 
         txs = model.step()
         step_metrics.append(collect_step_metrics(step, txs))

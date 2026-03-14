@@ -20,18 +20,43 @@ class Intervention:
     def apply(self, world, model) -> None:
         raise NotImplementedError
 
+    def revert(self, world, model) -> None:
+        raise NotImplementedError
+
 
 class CarbonPriceShock(Intervention):
     def apply(self, world, model) -> None:
+        if not hasattr(self, "_original_carbon_price"):
+            self._original_carbon_price = model.carbon_price
         model.carbon_price = float(self.parameters["new_price_usd_per_tco2"])
+
+    def revert(self, world, model) -> None:
+        if not hasattr(self, "_original_carbon_price"):
+            return
+        model.carbon_price = self._original_carbon_price
+        del self._original_carbon_price
 
 
 class PortDelayIntervention(Intervention):
     def apply(self, world, model) -> None:
+        if not hasattr(self, "_original_supported_fuels"):
+            self._original_supported_fuels = {}
         fuel_id = self.parameters["fuel_id"]
         for port in world.entities["ports"]:
-            if port.id in self.target_ids and fuel_id in port.supported_fuels:
-                port.supported_fuels.remove(fuel_id)
+            if port.id in self.target_ids:
+                if port.id not in self._original_supported_fuels:
+                    self._original_supported_fuels[port.id] = list(port.supported_fuels)
+                if fuel_id in port.supported_fuels:
+                    port.supported_fuels.remove(fuel_id)
+
+    def revert(self, world, model) -> None:
+        if not hasattr(self, "_original_supported_fuels"):
+            return
+        for port in world.entities["ports"]:
+            original_supported_fuels = self._original_supported_fuels.get(port.id)
+            if original_supported_fuels is not None:
+                port.supported_fuels = list(original_supported_fuels)
+        del self._original_supported_fuels
 
 
 class FuelSupplyDisruption(Intervention):
@@ -45,7 +70,21 @@ class FuelSupplyDisruption(Intervention):
                     raise InterventionError(
                         f"fuel not found for supplier: supplier_id={supplier_id}, fuel_id={fuel_id}"
                     )
+                if not hasattr(self, "_original_max_supply"):
+                    self._original_max_supply = supplier.max_supply_by_fuel[fuel_id]
                 supplier.max_supply_by_fuel[fuel_id] *= mult
+                return
+        raise InterventionError(f"supplier not found: {supplier_id}")
+
+    def revert(self, world, model) -> None:
+        if not hasattr(self, "_original_max_supply"):
+            return
+        supplier_id = self.parameters["supplier_id"]
+        fuel_id = self.parameters["fuel_id"]
+        for supplier in world.entities["suppliers"]:
+            if supplier.id == supplier_id:
+                supplier.max_supply_by_fuel[fuel_id] = self._original_max_supply
+                del self._original_max_supply
                 return
         raise InterventionError(f"supplier not found: {supplier_id}")
 
