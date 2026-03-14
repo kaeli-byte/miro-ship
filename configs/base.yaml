@@ -1,0 +1,6 @@
+simulation:
+  steps: 12
+  seed: 42
+carbon_price_usd_per_tco2: 50
+transport_premium: 15
+port_fee: 5

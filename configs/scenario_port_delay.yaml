@@ -1,0 +1,12 @@
+name: port_delay
+overrides:
+  simulation:
+    steps: 12
+interventions:
+  - id: delay_1
+    intervention_type: PortDelayIntervention
+    target_ids: [port_rotterdam]
+    start_step: 3
+    end_step: 8
+    parameters:
+      fuel_id: green_ammonia

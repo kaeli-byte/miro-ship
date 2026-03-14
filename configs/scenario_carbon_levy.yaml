@@ -1,0 +1,12 @@
+name: carbon_levy
+overrides:
+  simulation:
+    steps: 12
+interventions:
+  - id: levy_1
+    intervention_type: CarbonPriceShock
+    target_ids: [global]
+    start_step: 4
+    end_step: 12
+    parameters:
+      new_price_usd_per_tco2: 180

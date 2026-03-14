@@ -1,0 +1,25 @@
+- id: cargo_1
+  name: Cargo 1
+  preferred_emission_intensity: 1.0
+  willingness_to_pay_green_premium: 80
+  contracted_route_ids: [route_europe_asia]
+- id: cargo_2
+  name: Cargo 2
+  preferred_emission_intensity: 0.8
+  willingness_to_pay_green_premium: 120
+  contracted_route_ids: [route_me_asia]
+- id: cargo_3
+  name: Cargo 3
+  preferred_emission_intensity: 0.7
+  willingness_to_pay_green_premium: 150
+  contracted_route_ids: [route_europe_internal]
+- id: cargo_4
+  name: Cargo 4
+  preferred_emission_intensity: 1.2
+  willingness_to_pay_green_premium: 60
+  contracted_route_ids: [route_europe_asia, route_me_asia]
+- id: cargo_5
+  name: Cargo 5
+  preferred_emission_intensity: 0.6
+  willingness_to_pay_green_premium: 170
+  contracted_route_ids: [route_europe_internal]

@@ -1,0 +1,8 @@
+required_entities:
+  - fuels
+  - ports
+  - routes
+  - operators
+  - suppliers
+  - cargo_owners
+  - policies

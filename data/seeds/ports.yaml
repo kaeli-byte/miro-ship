@@ -1,0 +1,28 @@
+- id: port_rotterdam
+  name: Rotterdam
+  region: Europe
+  supported_fuels: [green_methanol, green_ammonia, fossil_marine_fuel]
+  bunkering_capacity_by_fuel: {green_methanol: 800, green_ammonia: 500, fossil_marine_fuel: 2000}
+  expansion_threshold: 0.8
+  expansion_delay_steps: 2
+- id: port_singapore
+  name: Singapore
+  region: Asia
+  supported_fuels: [green_methanol, green_hydrogen, fossil_marine_fuel]
+  bunkering_capacity_by_fuel: {green_methanol: 900, green_hydrogen: 400, fossil_marine_fuel: 2500}
+  expansion_threshold: 0.85
+  expansion_delay_steps: 3
+- id: port_fujairah
+  name: Fujairah
+  region: MiddleEast
+  supported_fuels: [green_ammonia, fossil_marine_fuel]
+  bunkering_capacity_by_fuel: {green_ammonia: 600, fossil_marine_fuel: 1800}
+  expansion_threshold: 0.8
+  expansion_delay_steps: 3
+- id: port_exporthub1
+  name: ExportHub1
+  region: Europe
+  supported_fuels: [green_methanol, green_hydrogen, fossil_marine_fuel]
+  bunkering_capacity_by_fuel: {green_methanol: 700, green_hydrogen: 300, fossil_marine_fuel: 1500}
+  expansion_threshold: 0.75
+  expansion_delay_steps: 2

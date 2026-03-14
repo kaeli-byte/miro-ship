@@ -1,0 +1,14 @@
+name: methanol_supply_shock
+overrides:
+  simulation:
+    steps: 12
+interventions:
+  - id: shock_1
+    intervention_type: FuelSupplyDisruption
+    target_ids: [supplier_1]
+    start_step: 4
+    end_step: 8
+    parameters:
+      fuel_id: green_methanol
+      supplier_id: supplier_1
+      capacity_multiplier: 0.6
