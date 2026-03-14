@@ -15,8 +15,8 @@ def main() -> None:
     args = parser.parse_args()
 
     app_config = load_app_config(Path(args.config))
-    world = build_world(Path(args.seed_dir), app_config)
     for scenario in args.scenarios:
+        world = build_world(Path(args.seed_dir), app_config)
         run_scenario(world, app_config, load_scenario_config(Path(scenario)))
     print("batch complete")
 
