@@ -1,0 +1,28 @@
+- id: green_methanol
+  name: Green Methanol
+  base_price_usd_per_tonne: 900
+  emission_factor_tco2e_per_tonne: 0.2
+  infra_maturity_score: 0.7
+  operational_risk_score: 0.3
+  supply_elasticity: 0.6
+- id: green_ammonia
+  name: Green Ammonia
+  base_price_usd_per_tonne: 850
+  emission_factor_tco2e_per_tonne: 0.25
+  infra_maturity_score: 0.5
+  operational_risk_score: 0.5
+  supply_elasticity: 0.5
+- id: green_hydrogen
+  name: Green Hydrogen
+  base_price_usd_per_tonne: 1200
+  emission_factor_tco2e_per_tonne: 0.1
+  infra_maturity_score: 0.4
+  operational_risk_score: 0.6
+  supply_elasticity: 0.4
+- id: fossil_marine_fuel
+  name: Fossil Marine Fuel
+  base_price_usd_per_tonne: 600
+  emission_factor_tco2e_per_tonne: 3.1
+  infra_maturity_score: 0.95
+  operational_risk_score: 0.1
+  supply_elasticity: 0.8
