@@ -1,0 +1,28 @@
+- id: supplier_1
+  name: Supplier 1
+  fuel_ids: [green_methanol, fossil_marine_fuel]
+  port_ids: [port_rotterdam, port_singapore]
+  max_supply_by_fuel: {green_methanol: 1200, fossil_marine_fuel: 5000}
+  reliability_score: 0.9
+  price_markup: 30
+- id: supplier_2
+  name: Supplier 2
+  fuel_ids: [green_ammonia, fossil_marine_fuel]
+  port_ids: [port_fujairah, port_rotterdam]
+  max_supply_by_fuel: {green_ammonia: 1000, fossil_marine_fuel: 4500}
+  reliability_score: 0.85
+  price_markup: 25
+- id: supplier_3
+  name: Supplier 3
+  fuel_ids: [green_hydrogen, green_methanol]
+  port_ids: [port_singapore, port_exporthub1]
+  max_supply_by_fuel: {green_hydrogen: 600, green_methanol: 900}
+  reliability_score: 0.8
+  price_markup: 35
+- id: supplier_4
+  name: Supplier 4
+  fuel_ids: [fossil_marine_fuel]
+  port_ids: [port_exporthub1, port_fujairah]
+  max_supply_by_fuel: {fossil_marine_fuel: 6000}
+  reliability_score: 0.95
+  price_markup: 20

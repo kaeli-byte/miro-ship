@@ -1,0 +1,7 @@
+- id: policy_carbon_base
+  type: carbon_price
+  region: global
+  start_step: 0
+  end_step:
+  parameters:
+    carbon_price_usd_per_tco2: 50
